@@ -7,6 +7,8 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
 import { Register } from './register.service';
+import { RancherService } from '../../entities/adminranch/rancher/rancher.service';
+import { IRancher, Rancher } from '../../shared/model/adminranch/rancher.model';
 // import { UserService } from '../../core/user/user.service';
 
 @Component({
@@ -21,6 +23,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   success: boolean;
   modalRef: NgbModalRef;
   authorities: any[];
+  rancher: IRancher;
 
   registerForm = this.fb.group({
     login: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*$')]],
@@ -35,6 +38,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     private loginModalService: LoginModalService,
     // private userService: UserService,
     private registerService: Register,
+    private rancherService: RancherService,
     private elementRef: ElementRef,
     private renderer: Renderer,
     private fb: FormBuilder
@@ -51,15 +55,15 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.authorities = [
       {
         id: 1,
-        name: 'ROLE_SHIP',
-        displayName: 'Ship',
-        langName: 'global.form.role.option.ship'
+        name: 'ROLE_USER',
+        displayName: 'Cattleman',
+        langName: 'global.form.role.option.cattleman'
       },
       {
         id: 2,
-        name: 'ROLE_PROVIDER',
-        displayName: 'Provider',
-        langName: 'global.form.role.option.prov'
+        name: 'ROLE_CONSULTANT',
+        displayName: 'Consultant',
+        langName: 'global.form.role.option.consultant'
       }
     ];
   }
@@ -88,8 +92,18 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.languageService.getCurrent().then(langKey => {
         registerAccount = { ...registerAccount, langKey };
         this.registerService.save(registerAccount).subscribe(
-          () => {
+          data => {
             this.success = true;
+
+            // Create new Rancher or Consultant depending on Authority.
+            if (authorities.includes('ROLE_USER')) {
+              alert(data.id);
+              // this.rancher.userId = data.id;
+              // this.rancherService.create(this.rancher);
+            }
+            if (authorities.includes('ROLE_CONSULTANT')) {
+              alert(data.id);
+            }
           },
           response => this.processError(response)
         );

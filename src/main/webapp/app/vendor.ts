@@ -41,6 +41,7 @@ import {
   faTasks,
   faHome,
   faHorse,
+  faTractor,
   faLanguage,
   faGlobeAmericas
 } from '@fortawesome/free-solid-svg-icons';
@@ -81,6 +82,7 @@ library.add(faSearch);
 library.add(faTrashAlt);
 library.add(faAsterisk);
 library.add(faHorse);
+library.add(faTractor);
 library.add(faLanguage);
 library.add(faGlobeAmericas);
 

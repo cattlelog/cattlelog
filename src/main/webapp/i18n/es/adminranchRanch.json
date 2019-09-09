@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "adminranchRanch": {
+      "home": {
+        "title": "Ranchos",
+        "createLabel": "Crear nuevo Rancho",
+        "createOrEditLabel": "Crear o editar Rancho",
+        "notFound": "No se encontro el Rancho"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Rancho {{ id }}?"
+      },
+      "detail": {
+        "title": "Rancho"
+      },
+      "name": "Nombre",
+      "location": "Ubicación",
+      "rancher": "Dueño",
+      "consultant": "Consultantor"
+    }
+  },
+  "adminranchApp": {
+    "adminranchRanch": {
+      "created": "Un nuevo Rancho ha sido creado con el identificador {{ param }}",
+      "updated": "Un Rancho ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Rancho ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

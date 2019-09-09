@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="consultant">
+            <h2><span jhiTranslate="gatewayApp.adminranchConsultant.detail.title">Consultant</span> {{consultant.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="gatewayApp.adminranchConsultant.userId">User Id</span></dt>
+                <dd>
+                    <span>{{consultant.userId}}</span>
+                </dd>
+                <dt><span jhiTranslate="gatewayApp.adminranchConsultant.licence">Licence</span></dt>
+                <dd>
+                    <span>{{consultant.licence}}</span>
+                </dd>
+                <dt><span jhiTranslate="gatewayApp.adminranchConsultant.ranch">Ranch</span></dt>
+                <dd>
+                    <span *ngFor="let ranch of consultant.ranches; let last = last">
+                        <a [routerLink]="['/ranch', ranch?.id, 'view' ]">{{ranch.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/consultant', consultant.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

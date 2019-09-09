@@ -1,0 +1,29 @@
+{
+  "gatewayApp": {
+    "adminranchRancher": {
+      "home": {
+        "title": "Ranchers",
+        "createLabel": "Crear nuevo Rancher",
+        "createOrEditLabel": "Crear o editar Rancher",
+        "notFound": "No Rancher found"
+      },
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Rancher {{ id }}?"
+      },
+      "detail": {
+        "title": "Rancher"
+      },
+      "userId": "User Id",
+      "code": "Code",
+      "shortCode": "Short Code",
+      "mark": "Mark"
+    }
+  },
+  "adminranchApp": {
+    "adminranchRancher": {
+      "created": "Un nuevo Rancher ha sido creado con el identificador {{ param }}",
+      "updated": "Un Rancher ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Rancher ha sido eliminado con el identificador {{ param }}"
+    }
+  }
+}

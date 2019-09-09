@@ -1,6 +1,6 @@
 {
   "home": {
-    "title": "Base",
+    "title": "CattleLog",
     "subtitle": "La bitacora de ganado",
     "logged": {
       "message": "Está conectado como \"{{username}}\"."

@@ -1,0 +1,43 @@
+{
+    "name": "Ranch",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "location",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "rancher",
+            "otherEntityRelationshipName": "ranch",
+            "relationshipName": "rancher",
+            "otherEntityField": "owner"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "consultant",
+            "otherEntityRelationshipName": "ranch",
+            "relationshipName": "consultant",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20190908204246",
+    "entityTableName": "ranch",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "microserviceName": "adminranch"
+}

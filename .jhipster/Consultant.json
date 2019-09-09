@@ -1,0 +1,36 @@
+{
+    "name": "Consultant",
+    "fields": [
+        {
+            "fieldName": "userId",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "licence",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "ranch",
+            "otherEntityRelationshipName": "consultant",
+            "relationshipName": "ranch",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20190908204244",
+    "entityTableName": "consultant",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "microserviceName": "adminranch"
+}

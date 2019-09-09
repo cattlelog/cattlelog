@@ -16,7 +16,7 @@
 logging:
   level:
     ROOT: INFO
-    io.crf.base.gateway: INFO
+    io.crf.cattlelog.gateway: INFO
     io.github.jhipster: INFO
 
 eureka:

@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="rancher">
+            <h2><span jhiTranslate="gatewayApp.adminranchRancher.detail.title">Rancher</span> {{rancher.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="gatewayApp.adminranchRancher.userId">User Id</span></dt>
+                <dd>
+                    <span>{{rancher.userId}}</span>
+                </dd>
+                <dt><span jhiTranslate="gatewayApp.adminranchRancher.code">Code</span></dt>
+                <dd>
+                    <span>{{rancher.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="gatewayApp.adminranchRancher.shortCode">Short Code</span></dt>
+                <dd>
+                    <span>{{rancher.shortCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="gatewayApp.adminranchRancher.mark">Mark</span></dt>
+                <dd>
+                    <span>{{rancher.mark}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/rancher', rancher.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

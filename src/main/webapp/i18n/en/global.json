@@ -7,6 +7,9 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "adminranchConsultant": "Consultant",
+        "adminranchRancher": "Rancher",
+        "adminranchRanch": "Ranch",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -34,6 +37,11 @@
       },
       "language": "Language"
     },
+    "ranch": {
+      "ranch": "Ranch",
+      "myRanches": "My Ranches",
+      "addRanch": "Add Ranch"
+    },
     "cattle": {
       "cattle": "Cattle",
       "addCattle": "Add Cattle"
@@ -51,7 +59,9 @@
       "email.placeholder": "Your email",
       "role.label": "Role",
       "role.option.ship": "Ship",
-      "role.option.prov": "Provider"
+      "role.option.prov": "Provider",
+      "role.option.cattleman": "Cattleman",
+      "role.option.consultant": "Consultant"
     },
     "messages": {
       "info": {

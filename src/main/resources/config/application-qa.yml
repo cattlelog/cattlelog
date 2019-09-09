@@ -17,7 +17,7 @@ logging:
   level:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
-    io.crf.base.gateway: DEBUG
+    io.crf.cattlelog.gateway: DEBUG
 
 eureka:
   instance:

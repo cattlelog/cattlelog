@@ -1,0 +1,28 @@
+{
+  "gatewayApp": {
+    "adminranchConsultant": {
+      "home": {
+        "title": "Consultants",
+        "createLabel": "Create a new Consultant",
+        "createOrEditLabel": "Create or edit a Consultant",
+        "notFound": "No Consultant found"
+      },
+      "delete": {
+        "question": "Are you sure you want to delete Consultant {{ id }}?"
+      },
+      "detail": {
+        "title": "Consultant"
+      },
+      "userId": "User Id",
+      "licence": "Licence",
+      "ranch": "Ranch"
+    }
+  },
+  "adminranchApp": {
+    "adminranchConsultant": {
+      "created": "A new Consultant is created with identifier {{ param }}",
+      "updated": "A Consultant is updated with identifier {{ param }}",
+      "deleted": "A Consultant is deleted with identifier {{ param }}"
+    }
+  }
+}
