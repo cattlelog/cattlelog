@@ -1,15 +1,17 @@
 import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 
-import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
+import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE, CONSTRAINT_VIOLATION_TYPE, ENTITY_NOT_FOUND_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
+import { User, UserService } from 'app/core';
 import { Register } from './register.service';
-import { RancherService } from '../../entities/adminranch/rancher/rancher.service';
-import { IRancher, Rancher } from '../../shared/model/adminranch/rancher.model';
-// import { UserService } from '../../core/user/user.service';
+// import { RancherService } from '../../entities/adminranch/rancher/rancher.service';
+// import { IRancher, Rancher } from '../../shared/model/adminranch/rancher.model';
+// import { Consultant } from 'app/shared/model/adminranch/consultant.model';
+// import { ConsultantService } from 'app/entities/adminranch/consultant/consultant.service';
 
 @Component({
   selector: 'jhi-register',
@@ -23,7 +25,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   success: boolean;
   modalRef: NgbModalRef;
   authorities: any[];
-  rancher: IRancher;
+  // rancher: IRancher;
+  // consultant: Consultant;
+  isSaving: boolean;
 
   registerForm = this.fb.group({
     login: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*$')]],
@@ -36,9 +40,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(
     private languageService: JhiLanguageService,
     private loginModalService: LoginModalService,
-    // private userService: UserService,
+    private userService: UserService,
     private registerService: Register,
-    private rancherService: RancherService,
+    // private rancherService: RancherService,
+    // private consultantService: ConsultantService,
     private elementRef: ElementRef,
     private renderer: Renderer,
     private fb: FormBuilder
@@ -66,6 +71,9 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         langName: 'global.form.role.option.consultant'
       }
     ];
+
+    // this.registerForm.patchValue({authority : this.authorities.find(authority => authority.name === 'ROLE_USER')});
+    this.registerForm.patchValue({ authority: 'ROLE_USER' });
   }
 
   ngAfterViewInit() {
@@ -92,18 +100,31 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.languageService.getCurrent().then(langKey => {
         registerAccount = { ...registerAccount, langKey };
         this.registerService.save(registerAccount).subscribe(
-          data => {
-            this.success = true;
-
+          () => {
+            // this.success = true;
+            // The following cannot be done because a rancher or a consultant
+            // cannot be created withouht being logged.
             // Create new Rancher or Consultant depending on Authority.
-            if (authorities.includes('ROLE_USER')) {
-              alert(data.id);
-              // this.rancher.userId = data.id;
-              // this.rancherService.create(this.rancher);
-            }
-            if (authorities.includes('ROLE_CONSULTANT')) {
-              alert(data.id);
-            }
+            // if (authorities.includes('ROLE_USER')) { // New Rancher
+            //   this.rancher = new Rancher();
+            //   this.rancher.userId = user.id;
+            //   this.rancherService.create(this.rancher).subscribe(
+            //     () => {
+            //       this.success = true;
+            //     },
+            //     response => this.processEntityError(response, user)
+            //   );
+            // }
+            // if (authorities.includes('ROLE_CONSULTANT')) { // New Consultant
+            //   this.consultant = new Consultant();
+            //   this.consultant.userId = user.id;
+            //   this.consultantService.create(this.consultant).subscribe(
+            //     () => {
+            //       this.success = true;
+            //     },
+            //     response => this.processEntityError(response, user)
+            //   );
+            // }
           },
           response => this.processError(response)
         );
@@ -113,6 +134,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   openLogin() {
     this.modalRef = this.loginModalService.open();
+  }
+
+  previousState() {
+    window.history.back();
   }
 
   private processError(response: HttpErrorResponse) {
@@ -125,4 +150,21 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.error = 'ERROR';
     }
   }
+
+  // private processEntityError(response: HttpErrorResponse, user: User) {
+  //   this.success = null;
+  //   if (response.status === 400 && response.error.type === CONSTRAINT_VIOLATION_TYPE) {
+  //     this.errorUserExists = 'ERROR';
+  //   } else if (response.status === 400 && response.error.type === ENTITY_NOT_FOUND_TYPE) {
+  //     this.errorEmailExists = 'ERROR';
+  //   } else {
+  //     this.error = 'ERROR';
+  //   }
+  //   this.userService.delete(user).subscribe(
+  //     () => {},
+  //     () => {
+  //       this.error = 'ERROR';
+  //     }
+  //   );
+  // }
 }

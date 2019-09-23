@@ -2,27 +2,27 @@
   "gatewayApp": {
     "adminranchConsultant": {
       "home": {
-        "title": "Consultants",
-        "createLabel": "Crear nuevo Consultant",
-        "createOrEditLabel": "Crear o editar Consultant",
-        "notFound": "No Consultant found"
+        "title": "Consultores",
+        "createLabel": "Crear nuevo Consultor",
+        "createOrEditLabel": "Crear o editar Consultor",
+        "notFound": "No se encontraron Consultures"
       },
       "delete": {
-        "question": "¿Seguro que quiere eliminar Consultant {{ id }}?"
+        "question": "¿Seguro que quiere eliminar al Consultor {{ id }}?"
       },
       "detail": {
-        "title": "Consultant"
+        "title": "Consultor"
       },
-      "userId": "User Id",
-      "licence": "Licence",
-      "ranch": "Ranch"
+      "userId": "Id de Usuario",
+      "licence": "Licencia",
+      "ranch": "Rancho"
     }
   },
   "adminranchApp": {
     "adminranchConsultant": {
-      "created": "Un nuevo Consultant ha sido creado con el identificador {{ param }}",
-      "updated": "Un Consultant ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Consultant ha sido eliminado con el identificador {{ param }}"
+      "created": "Un nuevo Consultor ha sido creado con el identificador {{ param }}",
+      "updated": "Un Consultor ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Consultor ha sido eliminado con el identificador {{ param }}"
     }
   }
 }

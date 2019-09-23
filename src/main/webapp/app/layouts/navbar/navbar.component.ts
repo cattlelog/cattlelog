@@ -76,6 +76,14 @@ export class NavbarComponent implements OnInit {
     return this.accountService.hasAnyAuthority(['ROLE_ASSOCIATION']);
   }
 
+  isConsultant() {
+    return this.accountService.hasAnyAuthority(['ROLE_CONSULTANT']);
+  }
+
+  // isRancher() {
+  //   return this.accountService.hasAnyAuthority(['ROLE_RANCHER']);
+  // }
+
   isAuthenticated() {
     return this.accountService.isAuthenticated();
   }

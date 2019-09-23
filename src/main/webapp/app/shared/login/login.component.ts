@@ -6,6 +6,13 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { RancherService } from 'app/entities/adminranch/rancher/rancher.service';
+import { ConsultantService } from 'app/entities/adminranch/consultant/consultant.service';
+import { AccountService, UserService, User } from 'app/core';
+// import { ActivatedRoute } from '@angular/router';
+
+import { IRancher, Rancher } from 'app/shared/model/adminranch/rancher.model';
+import { IConsultant, Consultant } from 'app/shared/model/adminranch/consultant.model';
 
 @Component({
   selector: 'jhi-login-modal',
@@ -13,6 +20,8 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 })
 export class JhiLoginModalComponent implements AfterViewInit {
   authenticationError: boolean;
+  // rancher: IRancher;
+  // consultant: IConsultant;
 
   loginForm = this.fb.group({
     username: [''],
@@ -23,6 +32,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
   constructor(
     private eventManager: JhiEventManager,
     private loginService: LoginService,
+    private rancherService: RancherService,
+    private consultantService: ConsultantService,
     private stateStorageService: StateStorageService,
     private elementRef: ElementRef,
     private renderer: Renderer,
@@ -51,9 +62,51 @@ export class JhiLoginModalComponent implements AfterViewInit {
         password: this.loginForm.get('password').value,
         rememberMe: this.loginForm.get('rememberMe').value
       })
-      .then(() => {
+      .then(user => {
         this.authenticationError = false;
         this.activeModal.dismiss('login success');
+
+        // Verify the roles (authorities)
+        // If its a rancher, verify the record exists.
+        if (user.authorities.includes('ROLE_USER')) {
+          // alert('it is a rancher! Ajayyyy');
+
+          this.rancherService.findByUserId(user.id).subscribe(
+            response => {
+              // alert('response body: ' + response.body);
+              // alert('rancher user id: ' + response.body.userId);
+              // alert('rancher id: ' + response.body.id);
+            },
+            response => {
+              // If status is 404, the ranch record has to be created.
+              if (response.status === 404) {
+                // Create the new Rancher record
+                // alert('we need to create a ranch record');
+                const rancher: IRancher = new Rancher();
+                rancher.userId = user.id;
+                this.rancherService.create(rancher).subscribe();
+              }
+            }
+          );
+        }
+
+        if (user.authorities.includes('ROLE_CONSULTANT')) {
+          this.consultantService.findByUserId(user.id).subscribe(
+            () => {},
+            response => {
+              // If status is 404, the consultant record has to be created.
+              if (response.status === 404) {
+                // Create the new Consultant record
+                const consultant: IConsultant = new Consultant();
+                consultant.userId = user.id;
+                this.consultantService.create(consultant).subscribe();
+              }
+            }
+          );
+        }
+
+        // If doesn't exist, create the record.
+
         if (this.router.url === '/register' || /^\/activate\//.test(this.router.url) || /^\/reset\//.test(this.router.url)) {
           this.router.navigate(['']);
         }

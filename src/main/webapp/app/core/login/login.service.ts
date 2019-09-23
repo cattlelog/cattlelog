@@ -13,7 +13,8 @@ export class LoginService {
       this.authServerProvider.login(credentials).subscribe(
         data => {
           this.accountService.identity(true).then(account => {
-            resolve(data);
+            // resolve(data);
+            resolve(account);
           });
           return cb();
         },
