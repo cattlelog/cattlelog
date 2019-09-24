@@ -11,7 +11,7 @@
         "question": "¿Seguro que quiere eliminar Rancho {{ id }}?"
       },
       "detail": {
-        "title": "Rancho"
+        "title": "Detalles del Rancho"
       },
       "name": "Nombre",
       "location": "Ubicación",

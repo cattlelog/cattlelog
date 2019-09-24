@@ -26,13 +26,13 @@
                            formControlName="location"/>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="form-control-label" jhiTranslate="gatewayApp.adminranchRanch.rancher" for="field_rancher">Rancher</label>
                     <select class="form-control" id="field_rancher" name="rancher" formControlName="rancher">
                         <option [ngValue]="null"></option>
                         <option [ngValue]="rancherOption.id === editForm.get('rancher').value?.id ? editForm.get('rancher').value : rancherOption" *ngFor="let rancherOption of ranchers; trackBy: trackRancherById">{{rancherOption.owner}}</option>
                     </select>
-                </div>
+                </div> -->
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

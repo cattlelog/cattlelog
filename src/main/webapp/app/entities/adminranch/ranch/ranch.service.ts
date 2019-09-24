@@ -27,6 +27,14 @@ export class RanchService {
     return this.http.get<IRanch>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  findAllByRancherId(id: number): Observable<EntityResponseType> {
+    return this.http.get<IRanch[]>(`${this.resourceUrl}/rancher/${id}`, { observe: 'response' });
+  }
+
+  findAllByUserId(id: number): Observable<EntityResponseType> {
+    return this.http.get<IRanch[]>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IRanch[]>(this.resourceUrl, { params: options, observe: 'response' });

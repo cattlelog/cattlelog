@@ -99,35 +99,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.errorEmailExists = null;
       this.languageService.getCurrent().then(langKey => {
         registerAccount = { ...registerAccount, langKey };
-        this.registerService.save(registerAccount).subscribe(
-          () => {
-            // this.success = true;
-            // The following cannot be done because a rancher or a consultant
-            // cannot be created withouht being logged.
-            // Create new Rancher or Consultant depending on Authority.
-            // if (authorities.includes('ROLE_USER')) { // New Rancher
-            //   this.rancher = new Rancher();
-            //   this.rancher.userId = user.id;
-            //   this.rancherService.create(this.rancher).subscribe(
-            //     () => {
-            //       this.success = true;
-            //     },
-            //     response => this.processEntityError(response, user)
-            //   );
-            // }
-            // if (authorities.includes('ROLE_CONSULTANT')) { // New Consultant
-            //   this.consultant = new Consultant();
-            //   this.consultant.userId = user.id;
-            //   this.consultantService.create(this.consultant).subscribe(
-            //     () => {
-            //       this.success = true;
-            //     },
-            //     response => this.processEntityError(response, user)
-            //   );
-            // }
-          },
-          response => this.processError(response)
-        );
+        this.registerService.save(registerAccount).subscribe(() => {}, response => this.processError(response));
       });
     }
   }

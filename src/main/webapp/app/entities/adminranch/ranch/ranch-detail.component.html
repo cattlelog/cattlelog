@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="ranch">
-            <h2><span jhiTranslate="gatewayApp.adminranchRanch.detail.title">Ranch</span> {{ranch.id}}</h2>
+            <h2><span jhiTranslate="gatewayApp.adminranchRanch.detail.title">Ranch Details</span> <!--{{ranch.id}}--> </h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
@@ -13,12 +13,12 @@
                 <dd>
                     <span>{{ranch.location}}</span>
                 </dd>
-                <dt><span jhiTranslate="gatewayApp.adminranchRanch.rancher">Rancher</span></dt>
+                <!-- <dt><span jhiTranslate="gatewayApp.adminranchRanch.rancher">Rancher</span></dt>
                 <dd>
                     <div *ngIf="ranch.rancher">
                         <a [routerLink]="['/rancher', ranch.rancher?.id, 'view']">{{ranch.rancher?.owner}}</a>
                     </div>
-                </dd>
+                </dd> -->
             </dl>
 
             <button type="submit"

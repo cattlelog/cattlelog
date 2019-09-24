@@ -9,6 +9,7 @@ import { IRanch, Ranch } from 'app/shared/model/adminranch/ranch.model';
 import { RanchService } from './ranch.service';
 import { IRancher } from 'app/shared/model/adminranch/rancher.model';
 import { RancherService } from 'app/entities/adminranch/rancher';
+import { AccountService } from 'app/core';
 import { IConsultant } from 'app/shared/model/adminranch/consultant.model';
 import { ConsultantService } from 'app/entities/adminranch/consultant';
 
@@ -19,6 +20,8 @@ import { ConsultantService } from 'app/entities/adminranch/consultant';
 export class RanchUpdateComponent implements OnInit {
   isSaving: boolean;
 
+  currentAccount: Account;
+  rancher: IRancher;
   ranchers: IRancher[];
 
   consultants: IConsultant[];
@@ -34,30 +37,53 @@ export class RanchUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected ranchService: RanchService,
     protected rancherService: RancherService,
+    protected accountService: AccountService,
     protected consultantService: ConsultantService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
+  loadRancherByUserId(userId) {
+    this.rancherService
+      .findByUserId(userId)
+      .pipe(
+        filter((res: HttpResponse<IRancher>) => res.ok),
+        map((res: HttpResponse<IRancher>) => res.body)
+      )
+      .subscribe(
+        (res: IRanch) => {
+          this.rancher = res;
+          // alert('rancher ready with id: ' + this.rancher.id);
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
+
   ngOnInit() {
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+      // alert('current account ready wiht id: ' + this.currentAccount.id);
+      this.loadRancherByUserId(this.currentAccount.id);
+    });
+
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ ranch }) => {
       this.updateForm(ranch);
     });
-    this.rancherService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IRancher[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IRancher[]>) => response.body)
-      )
-      .subscribe((res: IRancher[]) => (this.ranchers = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.consultantService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IConsultant[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IConsultant[]>) => response.body)
-      )
-      .subscribe((res: IConsultant[]) => (this.consultants = res), (res: HttpErrorResponse) => this.onError(res.message));
+    // this.rancherService
+    //   .query()
+    //   .pipe(
+    //     filter((mayBeOk: HttpResponse<IRancher[]>) => mayBeOk.ok),
+    //     map((response: HttpResponse<IRancher[]>) => response.body)
+    //   )
+    //   .subscribe((res: IRancher[]) => (this.ranchers = res), (res: HttpErrorResponse) => this.onError(res.message));
+    // this.consultantService
+    //   .query()
+    //   .pipe(
+    //     filter((mayBeOk: HttpResponse<IConsultant[]>) => mayBeOk.ok),
+    //     map((response: HttpResponse<IConsultant[]>) => response.body)
+    //   )
+    //   .subscribe((res: IConsultant[]) => (this.consultants = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(ranch: IRanch) {
@@ -89,7 +115,8 @@ export class RanchUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
       location: this.editForm.get(['location']).value,
-      rancher: this.editForm.get(['rancher']).value
+      // rancher: this.editForm.get(['rancher']).value
+      rancher: this.rancher
     };
   }
 

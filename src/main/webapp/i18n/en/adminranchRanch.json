@@ -11,11 +11,11 @@
         "question": "Are you sure you want to delete Ranch {{ id }}?"
       },
       "detail": {
-        "title": "Ranch"
+        "title": "Ranch details"
       },
       "name": "Name",
       "location": "Location",
-      "rancher": "Rancher",
+      "rancher": "Owner",
       "consultant": "Consultant"
     }
   },

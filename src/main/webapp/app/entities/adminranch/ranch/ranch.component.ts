@@ -14,7 +14,7 @@ import { RanchService } from './ranch.service';
 })
 export class RanchComponent implements OnInit, OnDestroy {
   ranches: IRanch[];
-  currentAccount: any;
+  currentAccount: Account;
   eventSubscriber: Subscription;
 
   constructor(
@@ -39,10 +39,42 @@ export class RanchComponent implements OnInit, OnDestroy {
       );
   }
 
+  loadAllByRancherId(rancherId) {
+    this.ranchService
+      .findAllByRancherId(rancherId)
+      .pipe(
+        filter((res: HttpResponse<IRanch[]>) => res.ok),
+        map((res: HttpResponse<IRanch[]>) => res.body)
+      )
+      .subscribe(
+        (res: IRanch[]) => {
+          this.ranches = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
+
+  loadAllByUserId(userId) {
+    this.ranchService
+      .findAllByUserId(userId)
+      .pipe(
+        filter((res: HttpResponse<IRanch[]>) => res.ok),
+        map((res: HttpResponse<IRanch[]>) => res.body)
+      )
+      .subscribe(
+        (res: IRanch[]) => {
+          this.ranches = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
+
   ngOnInit() {
-    this.loadAll();
+    // this.loadAll();
+
     this.accountService.identity().then(account => {
       this.currentAccount = account;
+      this.loadAllByUserId(this.currentAccount.id);
     });
     this.registerChangeInRanches();
   }
