@@ -44,7 +44,8 @@ import {
   faTractor,
   faLanguage,
   faGlobeAmericas,
-  faClock
+  faClock,
+  faDoorOpen
 } from '@fortawesome/free-solid-svg-icons';
 
 // Adds the SVG icon to the library so you can use it in your page
@@ -87,5 +88,6 @@ library.add(faTractor);
 library.add(faLanguage);
 library.add(faGlobeAmericas);
 library.add(faClock);
+library.add(faDoorOpen);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here

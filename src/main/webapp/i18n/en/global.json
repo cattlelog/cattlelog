@@ -40,7 +40,8 @@
     "ranch": {
       "ranch": "Ranch",
       "myRanches": "My Ranches",
-      "addRanch": "Add Ranch"
+      "addRanch": "Add Ranch",
+      "askAccess": "Ask for Access"
     },
     "cattle": {
       "cattle": "Cattle",

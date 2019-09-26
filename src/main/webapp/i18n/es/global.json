@@ -40,7 +40,8 @@
     "ranch": {
       "ranch": "Rancho",
       "myRanches": "Mis Ranchos",
-      "addRanch": "Agregar Rancho"
+      "addRanch": "Agregar Rancho",
+      "askAccess": "Pedir Acceso"
     },
     "cattle": {
       "cattle": "Ganado",

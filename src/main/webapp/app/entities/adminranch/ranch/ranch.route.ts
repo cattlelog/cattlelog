@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { UserRouteAccessService } from 'app/core';
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes, CanActivate, Router } from '@angular/router';
+import { UserRouteAccessService, AccountService } from 'app/core';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Ranch } from 'app/shared/model/adminranch/ranch.model';
@@ -9,8 +9,47 @@ import { RanchService } from './ranch.service';
 import { RanchComponent } from './ranch.component';
 import { RanchDetailComponent } from './ranch-detail.component';
 import { RanchUpdateComponent } from './ranch-update.component';
+import { RanchAccessComponent } from './ranch-access.component';
 import { RanchDeletePopupComponent } from './ranch-delete-dialog.component';
 import { IRanch } from 'app/shared/model/adminranch/ranch.model';
+
+@Injectable({ providedIn: 'root' })
+export class RanchAccess implements CanActivate {
+  constructor(private ranchService: RanchService, private accountService: AccountService, private router: Router) {}
+
+  canActivate(route: ActivatedRouteSnapshot) {
+    return this.verifyAccess(route);
+    // const result = this.verifyAccess(route);
+    // return result;
+  }
+
+  verifyAccess(route: ActivatedRouteSnapshot): Promise<boolean> {
+    const id = route.params['id'] ? route.params['id'] : null;
+    return this.accountService.identity().then(account => {
+      if (account) {
+        return new Promise(resolve => {
+          this.ranchService
+            .findAllByUserId(account.id)
+            .pipe(
+              filter((res: HttpResponse<IRanch[]>) => res.ok),
+              map((res: HttpResponse<IRanch[]>) => res.body)
+            )
+            .subscribe((res: IRanch[]) => {
+              if (id && res.map(i => i.id).includes(Number(id))) {
+                resolve(true);
+              } else {
+                this.router.navigate(['accessdenied']);
+                resolve(false);
+              }
+            });
+        });
+      } else {
+        this.router.navigate(['accessdenied']);
+        return false;
+      }
+    });
+  }
+}
 
 @Injectable({ providedIn: 'root' })
 export class RanchResolve implements Resolve<IRanch> {
@@ -30,7 +69,7 @@ export class RanchResolve implements Resolve<IRanch> {
 
 export const ranchRoute: Routes = [
   {
-    path: '',
+    path: 'all',
     component: RanchComponent,
     data: {
       authorities: ['ROLE_USER'],
@@ -46,6 +85,18 @@ export const ranchRoute: Routes = [
     },
     data: {
       authorities: ['ROLE_USER'],
+      pageTitle: 'gatewayApp.adminranchRanch.home.title'
+    },
+    canActivate: [UserRouteAccessService, RanchAccess]
+  },
+  {
+    path: 'access',
+    component: RanchAccessComponent,
+    resolve: {
+      ranch: RanchResolve
+    },
+    data: {
+      authorities: ['ROLE_CONSULTANT'],
       pageTitle: 'gatewayApp.adminranchRanch.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -72,7 +123,7 @@ export const ranchRoute: Routes = [
       authorities: ['ROLE_USER'],
       pageTitle: 'gatewayApp.adminranchRanch.home.title'
     },
-    canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService, RanchAccess]
   }
 ];
 
@@ -87,7 +138,7 @@ export const ranchPopupRoute: Routes = [
       authorities: ['ROLE_USER'],
       pageTitle: 'gatewayApp.adminranchRanch.home.title'
     },
-    canActivate: [UserRouteAccessService],
+    canActivate: [UserRouteAccessService, RanchAccess],
     outlet: 'popup'
   }
 ];

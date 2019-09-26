@@ -10,6 +10,7 @@ import {
   RanchUpdateComponent,
   RanchDeletePopupComponent,
   RanchDeleteDialogComponent,
+  RanchAccessComponent,
   ranchRoute,
   ranchPopupRoute
 } from './';
@@ -18,7 +19,14 @@ const ENTITY_STATES = [...ranchRoute, ...ranchPopupRoute];
 
 @NgModule({
   imports: [GatewaySharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [RanchComponent, RanchDetailComponent, RanchUpdateComponent, RanchDeleteDialogComponent, RanchDeletePopupComponent],
+  declarations: [
+    RanchComponent,
+    RanchDetailComponent,
+    RanchUpdateComponent,
+    RanchDeleteDialogComponent,
+    RanchDeletePopupComponent,
+    RanchAccessComponent
+  ],
   entryComponents: [RanchComponent, RanchUpdateComponent, RanchDeleteDialogComponent, RanchDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

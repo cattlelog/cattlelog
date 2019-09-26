@@ -28,7 +28,7 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="ranch-menu">
                     <li>
-                        <a class="dropdown-item" routerLink="ranch" routerLinkActive="active" (click)="collapseNavbar()">
+                        <a class="dropdown-item" routerLink="ranch/all" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="list"></fa-icon>
                             <span jhiTranslate="global.ranch.myRanches">My Ranches</span>
                         </a>
@@ -37,6 +37,12 @@
                         <a class="dropdown-item" routerLink="ranch/new" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="plus"></fa-icon>
                             <span jhiTranslate="global.ranch.addRanch">Add Ranch</span>
+                        </a>
+                    </li>
+                    <li *jhiHasAnyAuthority="'ROLE_CONSULTANT'">
+                        <a class="dropdown-item" routerLink="ranch/access" routerLinkActive="active" (click)="collapseNavbar()">
+                            <fa-icon icon="door-open"></fa-icon>
+                            <span jhiTranslate="global.ranch.askAccess">Ask for Access</span>
                         </a>
                     </li>
                 </ul>
