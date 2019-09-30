@@ -27,6 +27,10 @@ export class RanchAccess implements CanActivate {
     const id = route.params['id'] ? route.params['id'] : null;
     return this.accountService.identity().then(account => {
       if (account) {
+        if (this.accountService.hasAnyAuthority(['ROLE_ADMIN'])) {
+          return true;
+        }
+
         return new Promise(resolve => {
           this.ranchService
             .findAllByUserId(account.id)

@@ -119,7 +119,8 @@
       "edit": "Edit",
       "open": "Open",
       "save": "Save",
-      "view": "View"
+      "view": "View",
+      "requestAccess": "Request Access"
     },
     "detail": {
       "field": "Field",

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IRanch } from 'app/shared/model/adminranch/ranch.model';
+import { IRanchAccess } from '../../../shared/model/adminranch/ranch-access.model';
 
 type EntityResponseType = HttpResponse<IRanch>;
 type EntityArrayResponseType = HttpResponse<IRanch[]>;
@@ -23,6 +24,10 @@ export class RanchService {
     return this.http.put<IRanch>(this.resourceUrl, ranch, { observe: 'response' });
   }
 
+  requestAccess(ranchAccess: IRanchAccess): Observable<EntityResponseType> {
+    return this.http.post<IRanchAccess>(`${this.resourceUrl}/access`, ranchAccess, { observe: 'response' });
+  }
+
   find(id: number): Observable<EntityResponseType> {
     return this.http.get<IRanch>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
@@ -33,6 +38,10 @@ export class RanchService {
 
   findAllByUserId(id: number): Observable<EntityResponseType> {
     return this.http.get<IRanch[]>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
+  }
+
+  findAllForAccessByUserId(id: number): Observable<EntityResponseType> {
+    return this.http.get<IRanch[]>(`${this.resourceUrl}/access/user/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

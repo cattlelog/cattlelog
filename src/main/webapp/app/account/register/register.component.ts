@@ -6,13 +6,7 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE, CONSTRAINT_VIOLATION_TYPE, ENTITY_NOT_FOUND_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
-import { User, UserService } from 'app/core';
 import { Register } from './register.service';
-// import { RancherService } from '../../entities/adminranch/rancher/rancher.service';
-// import { IRancher, Rancher } from '../../shared/model/adminranch/rancher.model';
-// import { Consultant } from 'app/shared/model/adminranch/consultant.model';
-// import { ConsultantService } from 'app/entities/adminranch/consultant/consultant.service';
-
 @Component({
   selector: 'jhi-register',
   templateUrl: './register.component.html'
@@ -25,8 +19,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   success: boolean;
   modalRef: NgbModalRef;
   authorities: any[];
-  // rancher: IRancher;
-  // consultant: Consultant;
   isSaving: boolean;
 
   registerForm = this.fb.group({
@@ -40,10 +32,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   constructor(
     private languageService: JhiLanguageService,
     private loginModalService: LoginModalService,
-    private userService: UserService,
     private registerService: Register,
-    // private rancherService: RancherService,
-    // private consultantService: ConsultantService,
     private elementRef: ElementRef,
     private renderer: Renderer,
     private fb: FormBuilder
@@ -51,10 +40,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.success = false;
-
-    // this.userService.authorities().subscribe(authorities => {
-    //   this.authorities = authorities;
-    // });
 
     // Fill authorities
     this.authorities = [
@@ -122,21 +107,4 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.error = 'ERROR';
     }
   }
-
-  // private processEntityError(response: HttpErrorResponse, user: User) {
-  //   this.success = null;
-  //   if (response.status === 400 && response.error.type === CONSTRAINT_VIOLATION_TYPE) {
-  //     this.errorUserExists = 'ERROR';
-  //   } else if (response.status === 400 && response.error.type === ENTITY_NOT_FOUND_TYPE) {
-  //     this.errorEmailExists = 'ERROR';
-  //   } else {
-  //     this.error = 'ERROR';
-  //   }
-  //   this.userService.delete(user).subscribe(
-  //     () => {},
-  //     () => {
-  //       this.error = 'ERROR';
-  //     }
-  //   );
-  // }
 }
