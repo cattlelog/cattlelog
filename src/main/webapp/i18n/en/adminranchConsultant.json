@@ -23,6 +23,9 @@
       "created": "A new Consultant is created with identifier {{ param }}",
       "updated": "A Consultant is updated with identifier {{ param }}",
       "deleted": "A Consultant is deleted with identifier {{ param }}"
+    },
+    "ranchAccess": {
+      "requested": "Access request to the Ranch sent via email."
     }
   }
 }

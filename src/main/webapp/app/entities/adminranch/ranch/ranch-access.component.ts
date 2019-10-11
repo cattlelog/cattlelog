@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IRanch, IConsultant } from 'app/shared/model/adminranch/ranch.model';
+import { IConsultant } from 'app/shared/model/adminranch/consultant.model';
+import { IRanchWithAccess } from 'app/shared/model/adminranch/ranch-with-access.model';
 import { RanchAccess } from 'app/shared/model/adminranch/ranch-access.model';
 import { AccountService } from 'app/core';
 import { RanchService } from './ranch.service';
@@ -15,7 +16,8 @@ import { ConsultantService } from '../consultant/consultant.service';
   templateUrl: './ranch-access.component.html'
 })
 export class RanchAccessComponent implements OnInit {
-  ranches: IRanch[];
+  ranchesForConsultantWithAccess: IRanchWithAccess[];
+  ranchesForRancherWithAccess: IRanchWithAccess[];
   currentAccount: Account;
 
   constructor(
@@ -26,16 +28,34 @@ export class RanchAccessComponent implements OnInit {
     protected accountService: AccountService
   ) {}
 
-  loadAllForAccessByUserId(userId) {
+  loadAllForRancherWithAccessByUserId(userId) {
     this.ranchService
-      .findAllForAccessByUserId(userId)
+      .findAllForRancherWithAccessByUserId(userId)
       .pipe(
-        filter((res: HttpResponse<IRanch[]>) => res.ok),
-        map((res: HttpResponse<IRanch[]>) => res.body)
+        filter((res: HttpResponse<IRanchWithAccess[]>) => res.ok),
+        map((res: HttpResponse<IRanchWithAccess[]>) => res.body)
       )
       .subscribe(
-        (res: IRanch[]) => {
-          this.ranches = res;
+        (res: IRanchWithAccess[]) => {
+          this.ranchesForRancherWithAccess = res;
+        },
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
+
+  loadAllForConsultantWithAccessByUserId(userId) {
+    this.ranchService
+      .findAllForConsultantWithAccessByUserId(userId)
+      .pipe(
+        filter((res: HttpResponse<IRanchWithAccess[]>) => res.ok),
+        map((res: HttpResponse<IRanchWithAccess[]>) => res.body)
+      )
+      .subscribe(
+        (res: IRanchWithAccess[]) => {
+          this.ranchesForConsultantWithAccess = res.filter(
+            ranch => !(ranch.consultantUserId !== userId && (ranch.status === 'ACTIVE' || ranch.status === 'NEW'))
+          );
+          // this.ranchesForConsultantWithAccess = res;
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
@@ -44,7 +64,12 @@ export class RanchAccessComponent implements OnInit {
   ngOnInit() {
     this.accountService.identity().then(account => {
       this.currentAccount = account;
-      this.loadAllForAccessByUserId(this.currentAccount.id);
+
+      if (this.isConsultant()) {
+        this.loadAllForConsultantWithAccessByUserId(this.currentAccount.id);
+      }
+
+      this.loadAllForRancherWithAccessByUserId(this.currentAccount.id);
     });
   }
 
@@ -53,11 +78,11 @@ export class RanchAccessComponent implements OnInit {
       const ranchAccess = new RanchAccess(ranchId, res.body.id);
       this.ranchService.requestAccess(ranchAccess).subscribe(
         () => {
-          this.successMessage('Request Sent');
+          this.successMessage('adminranchApp.ranchAccess.requested');
         },
         // tslint:disable-next-line:no-shadowed-variable
         (res: HttpErrorResponse) => {
-          this.onError(res.error.title);
+          this.onError(res.error.message);
         }
       );
     });
@@ -70,6 +95,10 @@ export class RanchAccessComponent implements OnInit {
   }
 
   protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
+    this.jhiAlertService.error(errorMessage, 'timeout');
+  }
+
+  isConsultant() {
+    return this.accountService.hasAnyAuthority(['ROLE_CONSULTANT']);
   }
 }

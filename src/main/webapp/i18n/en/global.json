@@ -41,7 +41,7 @@
       "ranch": "Ranch",
       "myRanches": "My Ranches",
       "addRanch": "Add Ranch",
-      "askAccess": "Ask for Access"
+      "admin": "Accesses"
     },
     "cattle": {
       "cattle": "Cattle",
@@ -120,7 +120,8 @@
       "open": "Open",
       "save": "Save",
       "view": "View",
-      "requestAccess": "Request Access"
+      "requestAccess": "Request Access",
+      "removeAccess": "Remove Access"
     },
     "detail": {
       "field": "Field",

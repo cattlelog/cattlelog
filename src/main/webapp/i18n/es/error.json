@@ -9,6 +9,11 @@
       "500": "Error interno del servidor."
     },
     "concurrencyFailure": "Otro usuario ha modificado esta data al mismo tiempo que tú. Tus cambios fueron rechazados.",
-    "validation": "Error de validación en el servidor."
+    "validation": "Error de validación en el servidor.",
+    "adminRanch": {
+      "ranchAccess": {
+        "existing": "Petición de acceso al rancho existente. Re-enviando email de acceso."
+      }
+    }
   }
 }

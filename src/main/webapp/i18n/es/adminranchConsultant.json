@@ -23,6 +23,9 @@
       "created": "Un nuevo Consultor ha sido creado con el identificador {{ param }}",
       "updated": "Un Consultor ha sido actualizado con el identificador {{ param }}",
       "deleted": "Un Consultor ha sido eliminado con el identificador {{ param }}"
+    },
+    "ranchAccess": {
+      "requested": "Petición de acceso al rancho enviada via email."
     }
   }
 }

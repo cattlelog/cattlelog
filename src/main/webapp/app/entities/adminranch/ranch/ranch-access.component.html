@@ -1,36 +1,46 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="gatewayApp.access.title">Ranches</span>
+        <span jhiTranslate="gatewayApp.adminranchRanch.admin.title">Ranches</span>
     </h2>
     <jhi-alert></jhi-alert>
-    <br/>
+    <br />
     <div class="alert alert-warning" *ngIf="ranches?.length === 0">
         <span jhiTranslate="gatewayApp.adminranchRanch.home.notFound">No ranches found</span>
     </div>
-    <div class="table-responsive" *ngIf="ranches?.length > 0">
+    <span>{{currentAccount.id}}</span>
+    <div class="table-responsive" *ngIf="ranchesForConsultantWithAccess?.length > 0">
         <table class="table table-striped">
             <thead>
-            <tr>
-            <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="gatewayApp.adminranchRanch.name">Name</span></th>
-            <th></th>
-            </tr>
+                <tr>
+                    <th><span jhiTranslate="global.field.id">ID</span></th>
+                    <th><span jhiTranslate="gatewayApp.adminranchRanch.name">Name</span></th>
+                    <!-- <th><span jhiTranslate="global.form.role.option.consultant">Consultant</span></th> -->
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let ranch of ranches ;trackBy: trackId">
-                <td>{{ranch.id}}</td>
-                <td>{{ranch.name}}</td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                (click)= "requestAccess(ranch.id)"
-                                class="btn btn-info btn-sm">
-                            <fa-icon icon="door-open"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.requestAccess">Request Access</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                <!-- *ngIf="!(ranch.consultantUserId != currentAccount.id && ranch.status != NULL)" -->
+                <tr *ngFor="let ranch of ranchesForConsultantWithAccess ;trackBy: trackId" >
+                    <td >{{ranch.id}}</td>
+                    <td >{{ranch.name}} -> {{ranch.consultantUserId != currentAccount.id}} -> {{ranch.status == 'ACTIVE'}}</td>
+                    <td class="text-right" >
+                        <div class="btn-group">
+                            <button *ngIf="!(ranch.consultantUserId == currentAccount.id && ranch.status == 'ACTIVE')" type="submit"
+                                (click)="requestAccess(ranch.id)" class="btn btn-info btn-sm">
+                                <fa-icon icon="door-open"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.requestAccess">Request
+                                    Access</span>
+                            </button>
+                            <!-- <span>{{ranch.access}}</span> -->
+                            <button *ngIf="(ranch.consultantUserId == currentAccount.id && ranch.status == 'ACTIVE')" type="submit" (click)="removeAccess(ranch.id)"
+                                class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.removeAccess">Remove
+                                    Access</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

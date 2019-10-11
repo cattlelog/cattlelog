@@ -16,10 +16,10 @@
       "name": "Nombre",
       "location": "Ubicación",
       "rancher": "Dueño",
-      "consultant": "Consultantor"
-    },
-    "access": {
-      "title": "Pedir acceso a un Rancho"
+      "consultant": "Consultantor",
+      "admin": {
+        "title": "Administración de Ranchos"
+      }
     }
   },
   "adminranchApp": {

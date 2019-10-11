@@ -41,7 +41,7 @@
       "ranch": "Rancho",
       "myRanches": "Mis Ranchos",
       "addRanch": "Agregar Rancho",
-      "askAccess": "Pedir Acceso"
+      "admin": "Accesos"
     },
     "cattle": {
       "cattle": "Ganado",
@@ -120,7 +120,8 @@
       "open": "Abrir",
       "save": "Guardar",
       "view": "ver",
-      "requestAccess": "Pedir Acceso"
+      "requestAccess": "Pedir Acceso",
+      "removeAccess": "Remover Acceso"
     },
     "detail": {
       "field": "Campo",

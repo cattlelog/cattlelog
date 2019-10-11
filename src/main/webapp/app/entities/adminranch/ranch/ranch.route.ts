@@ -100,7 +100,7 @@ export const ranchRoute: Routes = [
       ranch: RanchResolve
     },
     data: {
-      authorities: ['ROLE_CONSULTANT'],
+      authorities: ['ROLE_USER', 'ROLE_CONSULTANT'],
       pageTitle: 'gatewayApp.adminranchRanch.home.title'
     },
     canActivate: [UserRouteAccessService]
