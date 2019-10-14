@@ -25,7 +25,9 @@
       "deleted": "A Consultant is deleted with identifier {{ param }}"
     },
     "ranchAccess": {
-      "requested": "Access request to the Ranch sent via email."
+      "requested": "Access request to the Ranch sent.",
+      "removed": "Access to the ranch removed.",
+      "granted": "Access to the ranch granted."
     }
   }
 }

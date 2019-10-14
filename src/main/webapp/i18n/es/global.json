@@ -121,7 +121,8 @@
       "save": "Guardar",
       "view": "ver",
       "requestAccess": "Pedir Acceso",
-      "removeAccess": "Remover Acceso"
+      "removeAccess": "Remover Acceso",
+      "grantAccess": "Permitir Acceso"
     },
     "detail": {
       "field": "Campo",

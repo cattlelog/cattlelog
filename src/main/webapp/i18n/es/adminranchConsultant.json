@@ -25,7 +25,9 @@
       "deleted": "Un Consultor ha sido eliminado con el identificador {{ param }}"
     },
     "ranchAccess": {
-      "requested": "Petición de acceso al rancho enviada via email."
+      "requested": "Petición de acceso al rancho enviada.",
+      "removed": "Acceso al rancho removido.",
+      "granted": "Acceso al rancho permitido."
     }
   }
 }

@@ -20,6 +20,7 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="gatewayApp.adminranchRanch.name">Name</span></th>
             <th><span jhiTranslate="gatewayApp.adminranchRanch.location">Location</span></th>
+            <th><span jhiTranslate="gatewayApp.adminranchRanch.rancher" *ngIf="isConsultant()">Rancher</span></th>
             <!-- <th><span jhiTranslate="gatewayApp.adminranchRanch.rancher">Rancher</span></th> -->
             <th></th>
             </tr>
@@ -29,6 +30,7 @@
                 <td><a [routerLink]="['/ranch', ranch.id, 'view' ]">{{ranch.id}}</a></td>
                 <td>{{ranch.name}}</td>
                 <td>{{ranch.location}}</td>
+                <td *ngIf="isConsultant()">{{ranch.rancher.code}}</td>
                 <!-- <td>
                     <div *ngIf="ranch.rancher">
                         <a [routerLink]="['../rancher', ranch.rancher?.id, 'view' ]" >{{ranch.rancher?.owner}}</a>

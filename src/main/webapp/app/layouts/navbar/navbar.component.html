@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark navbar-expand-md fixed-top"
-    [ngClass]="isAdmin() ? 'bg-admin' : isUser() ? 'bg-user' : isAssociation() ? 'bg-association' : isConsultant() ? 'bg-consultant' : 'bg-light' ">
+    [ngClass]="isAdmin() ? 'bg-admin' : isAssociation() ? 'bg-association' : isConsultant() ? 'bg-consultant' : isUser() ? 'bg-user' : 'bg-light' ">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
         <!-- <span jhiTranslate="global.title" class="navbar-title">WebSite</span>  -->

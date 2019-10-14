@@ -12,7 +12,7 @@
     "validation": "Validation error on the server.",
     "adminRanch": {
       "ranchAccess": {
-        "existing": "Access to the Ranch already Requested. Re-sending the request email."
+        "existing": "Access to the Ranch already Requested. Re-sending the request."
       }
     }
   }

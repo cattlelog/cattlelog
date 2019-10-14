@@ -1,11 +1,17 @@
 {
   "gatewayApp": {
     "adminranchRanch": {
+      "placeholder": {
+        "ranchName": "Ranch name"
+      },
       "home": {
         "title": "Ranchos",
         "createLabel": "Crear nuevo Rancho",
         "createOrEditLabel": "Crear o editar Rancho",
-        "notFound": "No se encontro el Rancho"
+        "notFound": "No se encontro el Rancho",
+        "emptyList": "No hay Ranchos en la lista.",
+        "searchRanch": "Busca un rancho: ",
+        "showAll": "Muestra todos"
       },
       "delete": {
         "question": "¿Seguro que quiere eliminar Rancho {{ id }}?"
@@ -19,6 +25,10 @@
       "consultant": "Consultantor",
       "admin": {
         "title": "Administración de Ranchos"
+      },
+      "access": {
+        "own": "Ranchos Propios",
+        "alien": "Ranchos Ajenos"
       }
     }
   },

@@ -7,6 +7,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IRanch } from 'app/shared/model/adminranch/ranch.model';
 import { AccountService } from 'app/core';
 import { RanchService } from './ranch.service';
+import { UserService } from '../../../core/user/user.service';
 
 @Component({
   selector: 'jhi-ranch',
@@ -21,7 +22,8 @@ export class RanchComponent implements OnInit, OnDestroy {
     protected ranchService: RanchService,
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected userService: UserService
   ) {}
 
   loadAll() {
@@ -64,6 +66,11 @@ export class RanchComponent implements OnInit, OnDestroy {
       .subscribe(
         (res: IRanch[]) => {
           this.ranches = res;
+          this.ranches.map(r =>
+            this.userService.findById(r.rancher.userId).subscribe(user => {
+              r.rancher.code = user.body.firstName + ' ' + user.body.lastName;
+            })
+          );
         },
         (res: HttpErrorResponse) => this.onError(res.message)
       );
@@ -93,5 +100,9 @@ export class RanchComponent implements OnInit, OnDestroy {
 
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  isConsultant() {
+    return this.accountService.hasAnyAuthority(['ROLE_CONSULTANT']);
   }
 }

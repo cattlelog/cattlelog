@@ -3,6 +3,7 @@ export interface IRanchWithAccess {
   name?: string;
   status?: string;
   consultantUserId?: number;
+  consultantName?: string;
 }
 
 export class Ranch implements IRanchWithAccess {

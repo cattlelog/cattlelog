@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 
+import { AutoCompleteModule } from 'primeng/primeng';
+
 import { GatewaySharedModule } from 'app/shared';
 import {
   RanchComponent,
@@ -18,7 +20,7 @@ import {
 const ENTITY_STATES = [...ranchRoute, ...ranchPopupRoute];
 
 @NgModule({
-  imports: [GatewaySharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [AutoCompleteModule, GatewaySharedModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [
     RanchComponent,
     RanchDetailComponent,

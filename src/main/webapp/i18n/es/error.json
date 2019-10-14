@@ -12,7 +12,7 @@
     "validation": "Error de validación en el servidor.",
     "adminRanch": {
       "ranchAccess": {
-        "existing": "Petición de acceso al rancho existente. Re-enviando email de acceso."
+        "existing": "Petición de acceso al rancho existente. Re-enviando petición de acceso."
       }
     }
   }

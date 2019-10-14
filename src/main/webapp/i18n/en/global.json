@@ -121,7 +121,8 @@
       "save": "Save",
       "view": "View",
       "requestAccess": "Request Access",
-      "removeAccess": "Remove Access"
+      "removeAccess": "Remove Access",
+      "grantAccess": "Grant Access"
     },
     "detail": {
       "field": "Field",

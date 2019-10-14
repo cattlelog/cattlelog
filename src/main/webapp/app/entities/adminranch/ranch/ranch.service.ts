@@ -26,7 +26,15 @@ export class RanchService {
   }
 
   requestAccess(ranchAccess: IRanchAccess): Observable<EntityResponseType> {
-    return this.http.post<IRanchAccess>(`${this.resourceUrl}/access`, ranchAccess, { observe: 'response' });
+    return this.http.post<IRanchAccess>(`${this.resourceUrl}/access/request`, ranchAccess, { observe: 'response' });
+  }
+
+  grantAccess(grantAccess: IRanchAccess): Observable<EntityResponseType> {
+    return this.http.post<IRanchAccess>(`${this.resourceUrl}/access/grant`, grantAccess, { observe: 'response' });
+  }
+
+  removeAccess(ranchId: number, consultantId: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`${this.resourceUrl}/access/${ranchId}/${consultantId}`, { observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {
@@ -41,8 +49,12 @@ export class RanchService {
     return this.http.get<IRanch[]>(`${this.resourceUrl}/user/${id}`, { observe: 'response' });
   }
 
-  findAllForConsultantWithAccessByUserId(id: number): Observable<EntityResponseType> {
-    return this.http.get<IRanchWithAccess[]>(`${this.resourceUrl}/access/consultant/user/${id}`, { observe: 'response' });
+  findAllForConsultantWithAccess(): Observable<EntityResponseType> {
+    return this.http.get<IRanchWithAccess[]>(`${this.resourceUrl}/access`, { observe: 'response' });
+  }
+
+  findAllForConsultantWithAccessByRanchName(ranchName: string): Observable<EntityResponseType> {
+    return this.http.get<IRanchWithAccess[]>(`${this.resourceUrl}/access/ranch/${ranchName}`, { observe: 'response' });
   }
 
   findAllForRancherWithAccessByUserId(id: number): Observable<EntityResponseType> {

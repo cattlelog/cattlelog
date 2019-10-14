@@ -4,35 +4,95 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br />
-    <div class="alert alert-warning" *ngIf="ranches?.length === 0">
+    <!-- <div class="alert alert-warning" *ngIf="ranches?.length === 0">
         <span jhiTranslate="gatewayApp.adminranchRanch.home.notFound">No ranches found</span>
+    </div> -->
+    <div *ngIf="isConsultant()">
+        <div class="table-responsive" *ngIf="ranchesForConsultantWithAccess?.length > 0">
+            <h3 jhiTranslate="gatewayApp.adminranchRanch.access.alien">Alien Ranches</h3>
+            <div style="margin-bottom: 5px;">
+                <span jhiTranslate="gatewayApp.adminranchRanch.home.searchRanch">Ranch Name</span>
+                <p-autoComplete [(ngModel)]="selected" [suggestions]="options" (completeMethod)="search($event)"
+                    (onClear)="loadLists()" [minLength]="2"
+                    placeholder="{{'gatewayApp.adminranchRanch.placeholder.ranchName' | translate}}">
+                </p-autoComplete>
+                <!-- <button (click)="loadLists()" class="btn btn-primary btn-sm" jhiTranslate="gatewayApp.adminranchRanch.home.showAll">Show All</button> -->
+            </div>
+            <div class="scrollable" style="max-height: 500px;">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th><span jhiTranslate="global.field.id">ID</span></th>
+                            <th><span jhiTranslate="gatewayApp.adminranchRanch.name">Name</span></th>
+                            <!-- <th><span jhiTranslate="global.form.role.option.consultant">Consultant</span></th> -->
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- *ngIf="!(ranch.consultantUserId != currentAccount.id && ranch.status != NULL)" -->
+                        <tr *ngFor="let ranch of ranchesForConsultantWithAccess ;trackBy: trackId">
+                            <td>{{ranch.id}}</td>
+                            <td>{{ranch.name}}</td>
+                            <td class="text-right">
+                                <div class="btn-group">
+                                    <button
+                                        *ngIf="!(ranch.consultantUserId == currentAccount.id && ranch.status == 'ACTIVE')"
+                                        type="submit" (click)="requestAccess(ranch.id)" class="btn btn-info btn-sm">
+                                        <fa-icon icon="door-open"></fa-icon>
+                                        <span class="d-none d-md-inline"
+                                            jhiTranslate="entity.action.requestAccess">Request
+                                            Access</span>
+                                    </button>
+                                    <!-- <span>{{ranch.access}}</span> -->
+                                    <button
+                                        *ngIf="(ranch.consultantUserId == currentAccount.id && ranch.status == 'ACTIVE')"
+                                        type="submit" (click)="removeAccess(ranch.id)" class="btn btn-danger btn-sm">
+                                        <fa-icon [icon]="'times'"></fa-icon>
+                                        <span class="d-none d-md-inline"
+                                            jhiTranslate="entity.action.removeAccess">Remove
+                                            Access</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <span>{{currentAccount.id}}</span>
-    <div class="table-responsive" *ngIf="ranchesForConsultantWithAccess?.length > 0">
+    <h3 jhiTranslate="gatewayApp.adminranchRanch.access.own">Own Ranches</h3>
+    <div class="alert alert-warning" *ngIf="ranchesForRancherWithAccess?.length === 0">
+        <span *ngIf="ranchesForRancherWithAccess?.length <= 0"
+            jhiTranslate="gatewayApp.adminranchRanch.home.notFound">No ranches found</span>
+    </div>
+    <div class="table-responsive" *ngIf="ranchesForRancherWithAccess.length > 0">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th><span jhiTranslate="global.field.id">ID</span></th>
                     <th><span jhiTranslate="gatewayApp.adminranchRanch.name">Name</span></th>
-                    <!-- <th><span jhiTranslate="global.form.role.option.consultant">Consultant</span></th> -->
+                    <th><span jhiTranslate="global.form.role.option.consultant">Consultant</span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <!-- *ngIf="!(ranch.consultantUserId != currentAccount.id && ranch.status != NULL)" -->
-                <tr *ngFor="let ranch of ranchesForConsultantWithAccess ;trackBy: trackId" >
-                    <td >{{ranch.id}}</td>
-                    <td >{{ranch.name}} -> {{ranch.consultantUserId != currentAccount.id}} -> {{ranch.status == 'ACTIVE'}}</td>
-                    <td class="text-right" >
+                <tr *ngFor="let ranch of ranchesForRancherWithAccess ;trackBy: trackId">
+                    <td>{{ranch.id}}</td>
+                    <td>{{ranch.name}}</td>
+                    <td>{{ranch.consultantName}} </td>
+                    <td class="text-right">
                         <div class="btn-group">
-                            <button *ngIf="!(ranch.consultantUserId == currentAccount.id && ranch.status == 'ACTIVE')" type="submit"
-                                (click)="requestAccess(ranch.id)" class="btn btn-info btn-sm">
+                            <button *ngIf="(ranch.consultantUserId != currentAccount.id && ranch.status == 'NEW')"
+                                type="submit" (click)="grantAccess(ranch.id,ranch.consultantUserId)"
+                                class="btn btn-primary btn-sm">
                                 <fa-icon icon="door-open"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.requestAccess">Request
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.grantAccess">Grant
                                     Access</span>
                             </button>
                             <!-- <span>{{ranch.access}}</span> -->
-                            <button *ngIf="(ranch.consultantUserId == currentAccount.id && ranch.status == 'ACTIVE')" type="submit" (click)="removeAccess(ranch.id)"
+                            <button *ngIf="!(ranch.consultantUserId != currentAccount.id && ranch.status == 'NEW')"
+                                type="submit" (click)="removeAccess(ranch.id, ranch.consultantUserId)"
                                 class="btn btn-danger btn-sm">
                                 <fa-icon [icon]="'times'"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.removeAccess">Remove
@@ -44,4 +104,5 @@
             </tbody>
         </table>
     </div>
+
 </div>

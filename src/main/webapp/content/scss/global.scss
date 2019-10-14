@@ -116,7 +116,7 @@ Generic styles
   -webkit-box-shadow: 0 8px 6px -6px #999;
   -moz-box-shadow: 0 8px 6px -6px #999;
   box-shadow: 0 8px 6px -6px #999;
-  margin-top: 10px;
+  // margin-top: 10px;
 }
 
 .btn-color1 {
@@ -138,6 +138,10 @@ Generic styles
 .center {
   margin: auto;
   width: 50%;
+}
+
+table {
+  margin-top: 5px;
 }
 
 /* ==========================================================================
